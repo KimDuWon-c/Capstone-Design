@@ -45,10 +45,7 @@ def execute_dangerzone(filename):
             subprocess.call(["/root/.local/bin/hwp5html " + uploadpath], shell=True)
             # convert to pdf
             print('hihi'+os.getcwd())
-            subprocess.call(["xvfb-run /usr/bin/wkhtmltopdf " + os.getcwd() + "/" + filename[
-                                                                           :-4] + "/index.xhtml " + htmldir_path + "/" +
-                             filename[:-4] + ".pdf"],
-                            shell=True)
+            subprocess.call(["xvfb-run /usr/bin/wkhtmltopdf " + os.getcwd() + "/" + filename[:-4] + "/index.xhtml " + htmldir_path + "/" + filename[:-4] + ".pdf"], shell=True)
             uploadpath = htmldir_path + "/" + filename[:-4] + ".pdf"
 
             # remove .local/bin/filename
