@@ -11,12 +11,12 @@ def print_flush(s=""):
 
 
 def main():
-    num_pages = len(glob.glob("/dangerzone/page-*.rgb"))
+    num_pages = len(glob.glob("/tmp/page-*.rgb"))
     print_flush(f"Document has {num_pages} pages")
 
     # Convert RGB files to PDF files
     for page in range(1, num_pages + 1):
-        filename_base = f"/dangerzone/page-{page}"
+        filename_base = f"/tmp/page-{page}"
         rgb_filename = f"{filename_base}.rgb"
         width_filename = f"{filename_base}.width"
         height_filename = f"{filename_base}.height"

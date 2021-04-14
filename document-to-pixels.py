@@ -87,7 +87,7 @@ def main():
 
     # Detect MIME type
     mime = magic.Magic(mime=True)
-    mime_type = mime.from_file("/home/ubuntu/Downloads/input_file")
+    mime_type = mime.from_file("/root/dangerzone/input_file")
 
     # Validate MIME type
     if mime_type not in conversions:
@@ -144,7 +144,9 @@ def main():
         print_flush(f"Converting to xhtml using pyhwp")
         args = [
             "hwp5html",
-            "/home/ubuntu/Downloads/input_file"
+            "--output",
+            "/tmp/xhtml",
+            "/root/dangerzone/input_file",
         ]
         try:
             p = subprocess.run(args, timeout=60)
@@ -156,28 +158,12 @@ def main():
         if p.returncode != 0:
             print_flush(f"Converting to xhtml failed: {p.stdout}")
             sys.exit(1)
-
-        print_flush(f"Move xhtml directory to /tmp")
-        args = [
-            "mv",
-            "/home/ubuntu/PycharmProjects/CapDe/input_file",
-            "/tmp"
-        ]
-        try:
-            p = subprocess.run(args,timeout=60)
-        except subprocess.TimeoutExpired:
-            print_flush(
-                "Error move input_file directory to /tmp"
-            )
-        if p.returncode != 0:
-            print_flush(f"Move input_file directory to /tmp failed: {p.stdout}")
-            sys.exit(1)
-
         print_flush(f"Converting to PDF using wkhtmltopdf")
         args = [
+            "xvfb-run",
             "wkhtmltopdf",
-            "/tmp/input_file/index.xhtml",
-            "/tmp/input_file.pdf"
+            "/tmp/xhtml/index.xhtml",
+            "/tmp/input_file.pdf",
         ]
         try:
             p = subprocess.run(args, timeout=60)
@@ -187,8 +173,9 @@ def main():
             )
             sys.exit(1)
         if p.returncode != 0:
-            print_flush(f"Converting to xhtml failed: {p.stdout}")
+            print_flush(f"Converting to PDF failed: {p.stdout}")
             sys.exit(1)
+        pdf_filename = "/tmp/input_file.pdf"
 
     else:
         print_flush("Invalid conversion type")
