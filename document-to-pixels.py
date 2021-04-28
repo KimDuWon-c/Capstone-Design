@@ -146,7 +146,7 @@ def main():
             "hwp5html",
             "--output",
             "/tmp/xhtml",
-            "/root/dangerzone/input_file",
+            "/tmp/input_file",
         ]
         try:
             p = subprocess.run(args, timeout=60)
