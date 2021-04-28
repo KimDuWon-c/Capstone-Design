@@ -87,7 +87,7 @@ def main():
 
     # Detect MIME type
     mime = magic.Magic(mime=True)
-    mime_type = mime.from_file("/root/dangerzone/input_file")
+    mime_type = mime.from_file("/tmp/input_file")
 
     # Validate MIME type
     if mime_type not in conversions:
