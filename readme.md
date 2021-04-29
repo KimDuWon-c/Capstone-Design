@@ -1,6 +1,8 @@
-It is a project using Open source dangerzone adding HWP file extension a lot of koreans use.
+It is a project utilizing Open source 'Dangerzone'
 
-Convert hwp to html through pyhwp and html to pdf throught wkhtmltopdf.
+In this project, adding HWP file extension a lot of koreans use.
+
+Convert hwp to html through pyhwp and html to pdf through wkhtmltopdf.
 
 Must install Korean Package.
 
