@@ -11,6 +11,6 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends fonts-nanum fonts-nanum-coding fonts-nanum-extra fcitx-hangul && \
     apt-get upgrade -y && \
     rm -rf /var/lib/apt/lists/* && \
-    useradd -ms /bin/bash user && \
+    useradd -ms /bin/bash user
 
-COPY ./scripts/* /usr/local/bin/
+COPY ./script/* /usr/local/bin/
