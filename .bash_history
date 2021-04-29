@@ -82,3 +82,46 @@ cd /tmp
 ls
 mv input_file /root
 exit
+apt-get update
+  apt-get install -y --no-install-recommends sudo python3 python3-magic python3-pil poppler-utils graphicsmagick ghostscript tesseract-ocr libreoffice tesseract-ocr-all
+apt-get install -y --no-install-recommends python3-pip xvfb xfonts-100dpi xfonts-75dpi xfonts-scalable xfonts-cyrillic wkhtmltopdf flashplugin-nonfree
+pip3 install --pre pyhwp six
+apt-get upgrade -y
+clear
+ls
+cd root
+ls
+cp input_file /tmp
+python3 document-to-pixels.py 
+cd /tmp
+ls
+tesseract page-3.png test -l Hangul pdf
+cd
+python3 pixels-to-pdf.py 
+cd /tmp
+ls
+env OCR=1
+env
+export OCR=1
+ls
+cd
+python3 pixels-to-pdf.py 
+export OCR_LANGUAGE=Hangul
+python3 pixels-to-pdf.py 
+cd /tmp
+ls
+mv safe-output.pdf /root
+rm page-3.pdf
+tesseract page-3.png test -l Hangul pdf
+ls
+mv test.pdf /root
+tesseract page-3.png test -l Hangul pdf --dpi 150
+tesseract page-3.png test --dpi 150 -l Hangul pdf 
+ls
+rm test.pdf
+tesseract page-3.png test --dpi 150 -l Hangul pdf 
+ls
+mv test.pdf /root/1.pdf
+cd
+ls
+exit
