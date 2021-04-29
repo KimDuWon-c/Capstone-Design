@@ -1,6 +1,6 @@
 It is a project utilizing Open source 'Dangerzone'
 
-In this project, adding HWP file extension a lot of koreans use.
+This project includes HWP file extension a lot of koreans use.
 
 Convert hwp to html through pyhwp and html to pdf through wkhtmltopdf.
 
