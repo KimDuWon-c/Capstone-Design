@@ -1,4 +1,4 @@
-import requests, os
+import requests, os, json
 
 API_KEY = "45e688ec223ad38565518fd51c7455a1a9f219638959a7053b53eb8fbb7e623a"
 
@@ -64,8 +64,8 @@ def file_report(file_id, file_name):
         'Accept': 'application/json',
     }
     response = requests.get('https://www.virustotal.com/api/v3/analyses/{}'.format(file_id), headers=headers)
-    with open(file_name, 'w+') as jason_file:
-        json.dump(response.json(), json_file, indent=4, sort_keys=True)
+    with open(file_name, 'w+', encoding='utf-8') as json_file:
+        json.dump(response.json(), json_file, indent=4)
 
 
 if __name__ == '__main__':
