@@ -58,16 +58,17 @@ def file_upload(orgfile, timeout=None, proxies = None):
                 exit(1)
 
 
-def file_report(file_id):
+def file_report(file_id, file_name):
     headers = {
         'x-apikey': API_KEY,
         'Accept': 'application/json',
     }
     response = requests.get('https://www.virustotal.com/api/v3/analyses/{}'.format(file_id), headers=headers)
-    return response.json()
+    with open(file_name, 'w+') as jason_file:
+        json.dump(response.json(), json_file, indent=4, sort_keys=True)
 
 
 if __name__ == '__main__':
     orgfile = 'test.hwp'
     file_id = file_upload(orgfile)['data']['id']
-    report_json = file_report(file_id)
+    file_report(file_id, 'report_jason')
