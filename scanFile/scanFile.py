@@ -33,7 +33,7 @@ def file_upload(orgfile, timeout=None, proxies = None):
                 if response.status_code != 200:
                     raise Exception(response)
 
-                return response.json()
+                return response.json()['data']['id']
 
             except Exception as e:
                 print(e)
@@ -51,24 +51,51 @@ def file_upload(orgfile, timeout=None, proxies = None):
                 if response.status_code != 200:
                     raise Exception(response)
 
-                return response.json()
+                return response.json()['data']['id']
 
             except Exception as e:
                 print(e)
                 exit(1)
 
 
-def file_report(file_id, file_name):
+
+def file_report(file_id):
     headers = {
         'x-apikey': API_KEY,
         'Accept': 'application/json',
     }
     response = requests.get('https://www.virustotal.com/api/v3/analyses/{}'.format(file_id), headers=headers)
-    with open(file_name, 'w+', encoding='utf-8') as json_file:
-        json.dump(response.json(), json_file, indent=4)
+    return response.json()
+
+
+def vtchart(file_data):
+    if file_data['stats']['malicious'] > 0:
+        flag = True
+    else:
+        flag = False
+
+    # 0: malicious, 1: undetected, 2: type-unsupported, 3: etc
+    re_data = [[] for _ in range(4)]
+    for e in file_data['results']:
+        base = file_data['results'][e]
+        if base['category'] == 'malicious':
+            re_data[0].append((base['engine_name'], base['result']))
+        elif base['category'] == 'undetected':
+            re_data[1].append((base['engine_name'], 'undetected'))
+        elif base['category'] == 'type-unsupported':
+            re_data[2].append((base['engine_name'], 'type-unsupported'))
+        else:
+            re_data[3].append((base['engine_name'], base['category']))
+
+    return flag, re_data
 
 
 if __name__ == '__main__':
     orgfile = 'test.hwp'
-    file_id = file_upload(orgfile)['data']['id']
-    file_report(file_id, 'report_jason')
+    file_id = file_upload(orgfile)
+    status = ''
+    while status != 'completed':
+        file_json = file_report(file_id)
+        status = file_json['data']['attributes']['status']
+    
+    is_detected, refined_data = vtchart(file_json['data']['attributes'])
