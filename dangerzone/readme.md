@@ -10,7 +10,7 @@ Must install Korean Package.
 
 If you want searchable PDF file. Execute following command for tesseract
 
-docker run --network none -v [document_filename]:/tmp/input_file -v [safe_dir]:/safezone [container_name] -e OCR=[ocr] -e OCR_LANGUAGE=[ocr_lang] document-to-pdf.sh
+docker run --network none -v [document_filename]:/tmp/input_file -v [safe_dir]:/safezone -e OCR=[ocr] -e OCR_LANGUAGE=[ocr_lang] [container_name] document-to-pdf.sh
 
 ex)  
 
