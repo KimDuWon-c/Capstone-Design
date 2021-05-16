@@ -20,7 +20,7 @@ docker run --network none -v /root/dangerzone/input_file:/tmp/input_file -v /roo
   
 Or if you want flat PDF file, Excute following command
 
-docker run --network none -v [document_filename]:/dangerzone -v [safe_dir]:/safezone [container_name] document-to-pdf.sh
+docker run --network none -v [document_filename]:/tmp/input_file -v [safe_dir]:/safezone [container_name] document-to-pdf.sh
 
 ex)
 
