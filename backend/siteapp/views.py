@@ -11,7 +11,7 @@ import time
 from .models import Post
 
 # Create your views here.
-API_KEY = "45e688ec223ad38565518fd51c7455a1a9f219638959a7053b53eb8fbb7e623a"
+API_KEY = ""
 BASE_DIR = os.getcwd()
 
 
@@ -35,7 +35,7 @@ def index(request):
             status = file_json['data']['attributes']['status']
             cnt += 1
             print(status, cnt)
-            #time.sleep(5)
+            time.sleep(10)
 
         file_sha = file_json['meta']['file_info']['sha256']
         with open(BASE_DIR + '/media/'+file_sha+'/report.json', 'w') as f:
