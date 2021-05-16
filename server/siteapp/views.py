@@ -38,21 +38,19 @@ def index(request):
             time.sleep(5)
 
         file_sha = file_json['meta']['file_info']['sha256']
-        # excute_dangerzone(BASE_DIR+'/'+media_dir+'/'+file_name, file_sha)
-        excute_dangerzone(file_name, file_sha)
+        excute_dangerzone(BASE_DIR+'/'+media_dir+'/'+file_name, file_sha)
         return vtchart(request, file_json['data']['attributes'], file_json['meta']['file_info']['sha256'])
 
 
-def excute_dangerzone(name, hash):
+def excute_dangerzone(path, hash):
     # 경로 표시
     # window: \\ , linux: /
     print('-'*10 + 'Excute Dangerzone' + '-' * 10)
-    file_rm = BASE_DIR+'\\media\\suspicious_files\\' + hash + '\\safe-output.pdf'
+    file_rm = BASE_DIR+'/media/' + hash + '/safe-output.pdf'
     if os.path.isfile(file_rm):
         os.remove(file_rm)
     
-    uploadpath = BASE_DIR + '\\media\\' + hash
-    path = BASE_DIR+'\\media\\suspicious_files\\'+name
+    uploadpath = BASE_DIR + '/media/' + hash
     args = [
         "docker",
         "run",
