@@ -77,7 +77,7 @@ def file_download(request, hash):
     print(request)
     print(hash)
     fs = FileSystemStorage()
-    filename = os.getcwd()+'/media/'+ hash + '/safe-output.pdf'
+    filename = BASE_DIR+'/media/'+ hash + '/safe-output.pdf'
     if fs.exists(filename):
         with fs.open(filename) as pdf:
             response = HttpResponse(pdf, content_type='application/pdf')
