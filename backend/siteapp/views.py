@@ -70,7 +70,8 @@ def excute_dangerzone(path, hash):
         sys.exit(1)
 
     if p.returncode != 0:
-        print_flush(f"Conversion to PDF failed: {p.stdout}")
+        print(f"Conversion to PDF failed: {p.stdout}")
+        sys.stdout.flush()
         sys.exit(1)
 
 def file_download(request, hash):
