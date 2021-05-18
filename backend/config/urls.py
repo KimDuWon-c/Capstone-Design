@@ -20,6 +20,6 @@ from siteapp import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('upload/', views.index),
-    path('nT5gWEq;SmNYA}r/<str:hash>/<int:pk>', views.vtchart),
+    path('upload/<str:hash>/<int:pk>', views.vtchart),
     path('download/<str:hash>/', views.file_download),
 ]

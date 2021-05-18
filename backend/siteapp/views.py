@@ -35,12 +35,12 @@ def index(request):
             status = file_json['data']['attributes']['status']
             cnt += 1
             print(status, cnt)
-            time.sleep(10)
+            # time.sleep(10)
 
         file_sha = file_json['meta']['file_info']['sha256']
+        excute_dangerzone(BASE_DIR+'/'+media_dir+'/'+file_name, file_sha)
         with open(BASE_DIR + '/media/'+file_sha+'/report.json', 'w') as f:
             json.dump(file_json, f, indent=4)
-        excute_dangerzone(BASE_DIR+'/'+media_dir+'/'+file_name, file_sha)
         return convey_id_hash(request, file_sha)
 
 
@@ -70,8 +70,7 @@ def excute_dangerzone(path, hash):
         sys.exit(1)
 
     if p.returncode != 0:
-        print(f"Conversion to PDF failed: {p.stdout}")
-        sys.stdout.flush()
+        print_flush(f"Conversion to PDF failed: {p.stdout}")
         sys.exit(1)
 
 def file_download(request, hash):
@@ -156,6 +155,7 @@ def file_report(file_id):
 
 def vtchart(request, hash, pk):
     print('-'*10 + 'VirusTotal Malicious Report' + '-'*10)
+    print(pk)
     file_path = BASE_DIR + "/media/" + hash + "/report.json"
     with open(file_path, "r") as f:
         file_json = json.load(f)
