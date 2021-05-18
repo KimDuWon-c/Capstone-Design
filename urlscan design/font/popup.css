@@ -1,0 +1,60 @@
+
+@font-face{
+    font-family : abster;
+    src:url(abster-webfont.woff) format('woff');
+}
+@font-face{
+    font-family : BMDOHYEON;
+    src:url(BMDOHYEON_ttf.woff) format('woff');
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+}
+
+.container{
+    background: linear-gradient(rgba(0,0,0,0.8),rgb(0, 0, 0, 0.8)),url(longshadow.jpg);
+    width: 300px; 
+    height: 300px;
+}
+.container .header h1 a{
+    position: absolute;
+    left: 25%;
+    text-decoration: none;
+    color: white;
+    font-family: abster;
+}
+.container .hero{
+    position: absolute;
+    left: 50%;
+    top:50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-align: center;
+    font-family: BMDOHYEON;
+}
+.container .hero button{
+    background: none;
+    border: solid darkseagreen;
+    color: white;
+    width : 100px;
+    height : 40px;
+    box-sizing : border-box;
+    border-radius: 15px;
+    margin-top: 0px;
+    outline: none;
+    cursor: pointer;
+    transition: all .4s;
+    font-family: BMDOHYEON;
+}
+.container .hero button:hover{
+    background-color: darkslategray;
+}
+.container .copyr{
+    position:absolute;
+    color: white;
+    font-family: BMDOHYEON;
+    top: 95%;
+}
