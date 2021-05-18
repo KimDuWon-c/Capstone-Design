@@ -5,16 +5,22 @@ import subprocess
 import json
 import requests
 import os
+import hashlib
+import base64, codecs, time
 from django.core.files.storage import FileSystemStorage
 from django.urls import reverse
 import time
 from .models import Post
 
 # Create your views here.
-API_KEY = ""
 BASE_DIR = os.getcwd()
 
 
+def home(request):
+    return render(request, "page_home.html")
+
+def info(request):
+    return render(request, "page_info.html")
 # Create your views here.
 def index(request):
     print("Receive File or URL")
@@ -43,6 +49,102 @@ def index(request):
             json.dump(file_json, f, indent=4)
         return convey_id_hash(request, file_sha)
 
+def url(request):
+    if request.method == "POST" and request.POST['testurl']:
+        url = request.POST['testurl']
+        url_bytes = url.encode('ascii')
+        url_base64 = base64.b64encode(url_bytes)
+        url_base64_str = url_base64.decode('ascii')
+        return render(request, "url.html", context={'url': url_base64_str})
+
+def url_report(request, url):
+    url_base64 = url
+    url_bytes = base64.b64decode(url)
+    url_real = url_bytes.decode('ascii')
+    headers = {
+        "Accept-Encoding": "gzip, deflate",
+        "User-Agent" : "gzip,  My Python requests library example client or username"
+        }
+    q=codecs.open("VT_Detect.txt","w",encoding = "utf-8")
+    q.write(url_real)
+    q.close()
+    f=codecs.open("VT_Detect.txt","r",encoding = "utf-8")
+    reassemble = f.read().splitlines()
+    print(reassemble)
+    reassemble_2 = [i.split('/')[2] for i in reassemble]
+    programs = []
+    detectTrueProg = []
+    detectTrueType = []
+    malicount = 0
+    phicount = 0
+    malwcount = 0
+    unrated = 0
+    f.close()
+    # detectTrueProg 는 해당 URL이 위험하다고 감지된 프로그램 List
+    # detectTrueType 은 해당 프로그램이 탐지한 해당 URL의 위험요소 List
+    # unrated 는 위험은 감지되지 않았지만 인증되지 않은 요소가 포함되어 있는 경우가
+    # 존재할 경우 unrated =1 , 그렇지 않은 경우 unrated = 0
+    for line_num, line in enumerate(reassemble_2):
+        print('%d) %s'%(line_num+1,line) + ' ==>',end='')
+        try:
+            params = {'apikey': apikey, 'resource':line}
+            response = requests.post('https://www.virustotal.com/vtapi/v2/url/report', params=params, headers=headers)
+            json_response = response.json()
+            positives_Json = json_response.get("positives")
+            response_Json = json_response.get("response_code")
+            scanr = json_response.get("scans")
+            print(json_response)
+            for i in range(0,88):
+                programs.append(list(scanr.keys())[i])
+
+            for i in range(0,88):
+                if(scanr.get(programs[i]).get("detected")==True):
+                    print(programs[i])
+                    detectTrueProg.append(programs[i])
+                    detectTrueType.append(scanr.get(programs[i]).get("result"))
+                if(scanr.get(programs[i]).get("result")=='malicious site'):
+                    malicount = malicount + 1
+
+                elif(scanr.get(programs[i]).get("result")=='phishing site'):
+                    phicount = phicount + 1
+
+                elif(scanr.get(programs[i]).get("result")=='malware site'):
+                    malwcount = malwcount + 1
+
+                elif(scanr.get(programs[i]).get("result")=='unrated site'):
+                    unrated = 1
+
+            for i in detectTrueType:
+                print(i)
+
+            print(malicount)
+            time.sleep(3)
+            if response_Json == 0:
+                continue
+
+            elif positives_Json > 0:
+                print (positives_Json)
+            elif positives_Json == 0:
+                print ("Non Detect")
+
+            else:
+                print ("Error")
+
+        finally:
+            print ('Non Error')
+            break
+    p=codecs.open("VT_Detect.txt", "w", encoding ="utf-8")
+    p.write("")
+    p.close()
+    data = zip(detectTrueProg, detectTrueType) 
+    if (positives_Json == 0 and unrated == 0):
+        return render(request, "page1.html", context= {'url': url_real, 'detectTrueProg': detectTrueProg, 'detectTrueType' : detectTrueType, 'unrated': unrated})
+    elif (positives_Json == 0 and unrated == 1):
+        return render(request, "page2.html", context= {'url': url_real, 'detectTrueProg': detectTrueProg, 'detectTrueType' : detectTrueType, 'unrated': unrated})
+    elif (positives_Json <=3 and malwcount <= 1 and phicount == 0):
+        return render(request, "page3.html", context= {'url': url_real, 'detectTrueProg': detectTrueProg, 'detectTrueType' : detectTrueType, 'unrated': unrated})
+    else:
+        return render(request, "page4.html", context= {'url': url_real, 'detectTrueProg' : detectTrueProg, 'detectTrueType' : detectTrueType, 'data': data, 'unrated': unrated})
 
 def excute_dangerzone(path, hash):
     print('-'*10 + 'Excute Dangerzone' + '-' * 10)
@@ -160,7 +262,7 @@ def vtchart(request, hash, pk):
     with open(file_path, "r") as f:
         file_json = json.load(f)
     file_data = file_json['data']['attributes']
-
+    status = file_json['data']['attributes']['status']
     if file_data['stats']['malicious'] > 0 or file_data['stats']['suspicious'] > 0:
         flag = True
     else:
@@ -181,7 +283,7 @@ def vtchart(request, hash, pk):
         else:
             re_data[4].append((base['engine_name'], base['category']))
 
-    return render(request, 'report.html', context={'data': re_data, 'flag': flag, 'hash': hash})
+    return render(request, 'report.html', context={'check': status, 'data': re_data, 'flag': flag, 'hash': hash})
 
 
 def convey_id_hash(request, file_sha):

@@ -1,15 +1,23 @@
-<!DOCTYPE html>
-<html lang="ko">
 
+{% load static %}
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{%static 'font/detection.css'%}">
+
 </head>
 
 <body>
+	<main role="main" class="inner cover">
+	<br>
+	<h1 class="cover-heading">Capston Design 6조</h1>
+	<p class="lead">악성코드 감지 내역입니다.</p>
+	<p class="medium">변환된 파일은 아래 버튼을 클릭하면 다운로드됩니다.</p>
+	<br>
     <button type="button" class="btn btn-dark" onclick="location.href='/download/{{hash}}'">안전한 파일 다운로드</button>
-
-
+	<br>
+	<br>
     <table class="table table-striped table-dark" width="100%">
         <thead>
             <tr>
@@ -26,7 +34,8 @@
             {% endfor %} {% endfor %}
         </tbody>
     </table>
-
+    <h2>오류가 발생하였습니다 파일을 다시 올려주세요</h2>
+	</main>
 </body>
 
 </html>

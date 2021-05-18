@@ -1,0 +1,33 @@
+{
+    "meta": {
+        "file_info": {
+            "size": 325201,
+            "sha256": "aaf40380b6d018d182595d734837ddba18e7a5f1cf53a1674b3dd4fb0eb7bbe6",
+            "name": "file",
+            "md5": "f1424d0ef932919e42b64dcb23e4b15b",
+            "sha1": "37b94155334a658368740e40c6b6fd75a7f6e877"
+        }
+    },
+    "data": {
+        "attributes": {
+            "date": 1621262920,
+            "status": "queued",
+            "stats": {
+                "harmless": 0,
+                "type-unsupported": 0,
+                "suspicious": 0,
+                "confirmed-timeout": 0,
+                "timeout": 0,
+                "failure": 0,
+                "malicious": 0,
+                "undetected": 0
+            },
+            "results": {}
+        },
+        "type": "analysis",
+        "id": "ZjE0MjRkMGVmOTMyOTE5ZTQyYjY0ZGNiMjNlNGIxNWI6MTYyMTI2MjkyMA==",
+        "links": {
+            "self": "https://www.virustotal.com/api/v3/analyses/ZjE0MjRkMGVmOTMyOTE5ZTQyYjY0ZGNiMjNlNGIxNWI6MTYyMTI2MjkyMA%3D%3D"
+        }
+    }
+}

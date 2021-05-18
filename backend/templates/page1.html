@@ -1,0 +1,44 @@
+{% load static %}
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scal=1.0">
+  <title>APT-DETECT</title>
+  <link rel="stylesheet" href="{% static 'font/style.css' %}">
+  <script src="htmljs/updatetab.js"></script>
+
+</head>
+
+<body id="page-top">
+  <div class = "container">
+    <div class= "header">
+      <h1><a href="http://49.50.166.66:8000/page_home">APT_DETECT</a></h1>
+      <div class = "nav">
+        <ul>
+          <li><a href = "http://49.50.166.66:8000/page_home">HOME</a></li>
+          <li><a href = "http://49.50.155.66:8000/page_info">INFO</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="hero">
+      <img src = "/static/img/warn_safe2.png" widthalt ="WARNING">
+      <h2>이 페이지의 위험도는 "안전" 입니다.</h2>
+      <p>현재 페이지는 Malware및 기타 악성코드, 피싱요소 등</p>
+      <p>사용자에게 위험한 요소들이 포함되지 않아 안전한 사이트입니다.</p>
+      <br>
+      <br>
+      <ul>
+        <li>기타 광고창과 팝업 등은 자동으로 차단됩니다.</li>
+        <li>이용해 주셔서 감사합니다.</li>
+      </ul>
+      <br>
+      <br>
+      <button id="update" onclick="location.href='{{url}}'">사이트 접속하기</button>
+      </div>
+    <footer class = "copyr">
+      <div>
+        <p>Copyright &copy; 사이버보안캡스톤디자인 6조</p>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

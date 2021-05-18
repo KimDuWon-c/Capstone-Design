@@ -19,7 +19,11 @@ from siteapp import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('page_home/', views.home),
+    path('page_info/', views.info),
     path('upload/', views.index),
     path('upload/<str:hash>/<int:pk>', views.vtchart),
     path('download/<str:hash>/', views.file_download),
+    path('url/', views.url),
+    path('url/<str:url>/', views.url_report),
 ]
