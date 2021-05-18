@@ -14,8 +14,8 @@ document.addEventListener('DOMContentLoaded', function(){
             .then(resp => resp.text())
             .then(data => {
                 var split = data.split("\n")
-                var id = split[0]
-                var hash = split[1]
+                var hash = split[0]
+                var id = split[1]
                 chrome.tabs.create({url: "http://49.50.166.66:8000/upload/" + hash + "/" + id})
         })
             .catch(error => alert(error));
